@@ -3,6 +3,8 @@ package com.sharmana.db.domain;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 
+import java.util.Date;
+
 /**
  * Created by strusov on 11.10.2014.
  */
@@ -28,6 +30,9 @@ public class Transaction {
 
     @DatabaseField(columnName = "externalId", dataType = DataType.STRING)
     private String externalId;
+
+    @DatabaseField(columnName = "date", dataType = DataType.DATE_TIME)
+    private Date date;
 
     public int getId() {
         return id;
@@ -78,15 +83,23 @@ public class Transaction {
         this.externalId = externalId;
     }
 
+    public Date getDate() {
+        return date;
+    }
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("{ Id = ").append(id);
+        sb.append("Type = Transaction { Id = ").append(id);
         sb.append(", ").append("Event =").append(event);
         sb.append(", ").append("From = ").append(from);
         sb.append(", ").append("To = ").append(to);
         sb.append(", ").append("Currency = ").append(currency);
         sb.append(", ").append("Amount = ").append(amount);
+        sb.append(", ").append("Date = ").append(date);
         sb.append(", ").append("ExternalId = ").append(externalId).append(" }");
         return sb.toString();
     }

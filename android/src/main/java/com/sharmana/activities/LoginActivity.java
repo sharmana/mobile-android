@@ -11,15 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import com.sharmana.R;
-import com.sharmana.Tasks.YandexOAuthTokenTask;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 
 public class LoginActivity extends Activity implements View.OnClickListener {
@@ -76,7 +67,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
     private void handleEnter() {
         Log.i(LOG_TAG, "Button 'Enter' clicked");
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://oauth.yandex.ru/authorize?response_type=code&client_id=20880bd1f59c42b48f419e986fbc6b4d"));
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://oauth.yandex.ru/authorize?response_type=token&client_id=20880bd1f59c42b48f419e986fbc6b4d&display=popup"));
         startActivity(browserIntent);
 //        new YandexOAuthTokenTask().execute();
     }

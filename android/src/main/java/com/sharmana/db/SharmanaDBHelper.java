@@ -10,6 +10,7 @@ import com.j256.ormlite.table.TableUtils;
 import com.sharmana.db.domain.Event;
 import com.sharmana.db.domain.Group;
 import com.sharmana.db.domain.Transaction;
+import com.sharmana.db.domain.User;
 
 import java.sql.SQLException;
 import java.util.concurrent.atomic.AtomicLong;
@@ -22,11 +23,12 @@ public class SharmanaDBHelper extends OrmLiteSqliteOpenHelper {
     private static final String LOG_TAG = "com.sharmana.SharmanaDBHelper";
 
     private static final String DATABASE_NAME = "SharmanaDB";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 7;
 
     private static SharmanaDBHelper helper;
     private static AtomicLong usageCounter = new AtomicLong();
 
+    private static Dao<User, Integer> usersDao;
     private static Dao<Group, Integer> groupsDao;
     private static Dao<Event, Integer> eventsDao;
     private static Dao<Transaction, Integer> transactionsDao;
@@ -40,6 +42,7 @@ public class SharmanaDBHelper extends OrmLiteSqliteOpenHelper {
         try {
             Log.i(LOG_TAG, "onCreate");
 
+            TableUtils.createTable(connectionSource, User.class);
             TableUtils.createTable(connectionSource, Group.class);
             TableUtils.createTable(connectionSource, Event.class);
             TableUtils.createTable(connectionSource, Transaction.class);
@@ -92,5 +95,12 @@ public class SharmanaDBHelper extends OrmLiteSqliteOpenHelper {
             transactionsDao = getDao(Transaction.class);
         }
         return transactionsDao;
+    }
+
+    public Dao<User, Integer> getUsersDao() throws SQLException{
+        if (usersDao == null) {
+            usersDao = getDao(User.class);
+        }
+        return usersDao;
     }
 }
