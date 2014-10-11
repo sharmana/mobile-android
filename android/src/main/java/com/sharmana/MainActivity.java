@@ -6,6 +6,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.j256.ormlite.dao.Dao;
+import com.octo.android.robospice.JacksonGoogleHttpClientSpiceService;
+import com.octo.android.robospice.SpiceManager;
+import com.octo.android.robospice.persistence.DurationInMillis;
 import com.sharmana.db.domain.Event;
 import com.sharmana.db.domain.Group;
 import com.sharmana.db.SharmanaDBHelper;
@@ -19,6 +22,7 @@ public class MainActivity extends ActionBarActivity {
     private static final String LOG_TAG = "com.sharmana.MainActivity";
 
     SharmanaDBHelper helper = null;
+    private SpiceManager spiceManager = new SpiceManager(JacksonGoogleHttpClientSpiceService.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +63,6 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -79,6 +82,18 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onStart() {
+        spiceManager.start(this);
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        spiceManager.shouldStop();
+        super.onStop();
+    }
+
     private SharmanaDBHelper getSharmanaHelper() {
         if (helper == null) {
             helper = SharmanaDBHelper.getHelper(this);
@@ -86,4 +101,17 @@ public class MainActivity extends ActionBarActivity {
 //        Group g = new Group();
         return helper;
     }
+
+    protected SpiceManager getSpiceManager() {
+        return spiceManager;
+    }
+
+//    private void performRequest(String user) {
+//        MainActivity.this.setProgressBarIndeterminateVisibility(true);
+//
+//        FollowersRequest request = new FollowersRequest(user);
+//        lastRequestCacheKey = request.createCacheKey();
+//
+//        spiceManager.execute(request, lastRequestCacheKey, DurationInMillis.ONE_MINUTE, new ListFollowersRequestListener());
+//    }
 }
