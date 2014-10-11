@@ -19,8 +19,8 @@ public class User {
     @DatabaseField(canBeNull = false, dataType = DataType.STRING, columnName = "email")
     private String email;
 
-    @DatabaseField(dataType = DataType.STRING, columnName = "email")
-    private String token;
+    @DatabaseField(dataType = DataType.STRING, columnName = "yandexId")
+    private String yandexId;
 
     @DatabaseField(columnName = "externalId", dataType = DataType.STRING)
     private String externalId;
@@ -57,12 +57,12 @@ public class User {
         this.email = email;
     }
 
-    public String getToken() {
-        return token;
+    public String getYandexId() {
+        return yandexId;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setYandexId(String yandexId) {
+        this.yandexId = yandexId;
     }
 
     @Override
@@ -71,7 +71,7 @@ public class User {
         sb.append("Type = User { Id = ").append(id);
         sb.append(", ").append("Name = ").append(name);
         sb.append(", ").append("Email = ").append(email);
-        sb.append(", ").append("Token = ").append(token);
+        sb.append(", ").append("YandexId = ").append(yandexId);
         sb.append(", ").append("ExternalId = ").append(externalId).append(" }");
         return sb.toString();
     }

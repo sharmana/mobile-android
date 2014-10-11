@@ -1,15 +1,22 @@
 package com.sharmana.activities;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.sharmana.R;
+import com.sharmana.Tasks.OnObjectDtoLoadedListnerer;
 import com.sharmana.Tasks.SharmanaAuthByYaTokenTask;
+import com.sharmana.db.SharmanaDBHelper;
+import com.sharmana.db.dao.UserDao;
+import com.sharmana.db.domain.User;
+import com.sharmana.db.dto.UserDTO;
 
-public class LoginHandlerActivity extends ActionBarActivity {
+import java.sql.SQLException;
+
+public class LoginHandlerActivity extends Activity implements OnObjectDtoLoadedListnerer<UserDTO> {
 
     private static final String LOG_TAG = "com.sharmana.activities.LoginHandlerActivity";
 
@@ -33,9 +40,8 @@ public class LoginHandlerActivity extends ActionBarActivity {
         String accessToken = url.substring(start, stop);
         Log.i(LOG_TAG, accessToken);
 
-        new SharmanaAuthByYaTokenTask().execute(accessToken);
+        new SharmanaAuthByYaTokenTask(this).execute(accessToken);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -54,5 +60,19 @@ public class LoginHandlerActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void objectLoaded(UserDTO objectDTO) {
+        try {
+            UserDao userDao = new UserDao(SharmanaDBHelper.getHelper(this));
+            User user = userDao.getByExternalId(objectDTO.get_id());
+            if (user == null) {
+                userDao.insertUser(objectDTO);
+            }
+            Log.i(LOG_TAG, String.valueOf(userDao.getAllUser()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
