@@ -4,6 +4,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:0.12.2'
+
     }
 }
 apply plugin: 'com.android.application'
@@ -36,4 +37,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:19.1.0'
     compile 'com.android.support:gridlayout-v7:19.1.0'
     compile 'com.android.support:support-v4:19.1.0'
+    compile 'com.j256.ormlite:ormlite-android:4.48'
+    compile 'com.j256.ormlite:ormlite-core:4.48'
 }
