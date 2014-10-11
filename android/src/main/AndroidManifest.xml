@@ -57,7 +57,8 @@
 
         <activity
             android:name=".activities.LoginHandlerActivity"
-            android:label="@string/title_activity_login_handler" >
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"></action>
                 <category android:name="android.intent.category.DEFAULT"></category>

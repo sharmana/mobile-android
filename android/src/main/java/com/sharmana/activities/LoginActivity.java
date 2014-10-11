@@ -38,6 +38,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         bEnter.setTypeface(typeface);
         bEnter.setOnClickListener(this);
         Log.i(LOG_TAG, "button initiated");
+
+        Intent intent = new Intent(this, EventActivity.class);
+        startActivity(intent);
     }
 
     @Override
