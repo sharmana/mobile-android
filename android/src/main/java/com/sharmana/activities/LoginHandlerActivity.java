@@ -1,7 +1,7 @@
 package com.sharmana.activities;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import com.sharmana.R;
 import com.sharmana.Tasks.SharmanaAuthByYaTokenTask;
 
-public class LoginHandlerActivity extends ActionBarActivity {
+public class LoginHandlerActivity extends Activity {
 
     private static final String LOG_TAG = "com.sharmana.activities.LoginHandlerActivity";
 

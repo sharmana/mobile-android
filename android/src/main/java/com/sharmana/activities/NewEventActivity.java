@@ -1,14 +1,12 @@
 package com.sharmana.activities;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageButton;
-import android.widget.ListView;
 import com.sharmana.R;
-
-public class NewEventActivity extends ActionBarActivity {
+s
+public class NewEventActivity extends Activity {
 
 
 

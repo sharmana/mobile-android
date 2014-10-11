@@ -1,12 +1,12 @@
 package com.sharmana.activities;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.sharmana.R;
 
-public class TransactionActivity extends ActionBarActivity {
+public class TransactionActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
