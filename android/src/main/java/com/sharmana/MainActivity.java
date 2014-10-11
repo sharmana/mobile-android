@@ -6,8 +6,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.j256.ormlite.dao.Dao;
-import com.sharmana.db.Group;
+import com.sharmana.db.domain.Event;
+import com.sharmana.db.domain.Group;
 import com.sharmana.db.SharmanaDBHelper;
+import com.sharmana.db.domain.Transaction;
 
 import java.sql.SQLException;
 
@@ -24,8 +26,34 @@ public class MainActivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_main);
         try {
-            Dao<Group, Integer> groups = getSharmanaHelper().getGroupsDao();
-            groups.queryForAll();
+            Dao<Group, Integer> groupsDao = getSharmanaHelper().getGroupsDao();
+            Dao<Event, Integer> eventDao = getSharmanaHelper().getEventsDao();
+            Dao<Transaction, Integer> transactionsDao = getSharmanaHelper().getTransactionsDao();
+
+//            Group g = new Group("MyGroup");
+//            groupsDao.create(g);
+//
+//            Event e = new Event();
+//            e.setName("MyEvent");
+//            e.setGroup(g);
+//            e.setCurrency("RUB");
+//            e.setAmount(100.0);
+//            eventDao.create(e);
+//
+//            Transaction t = new Transaction();
+//            t.setEvent(e);
+//            t.setFrom("trusov");
+//            t.setTo("maslov");
+//            t.setCurrency("RUB");
+//            t.setAmount(100.0);
+//            transactionsDao.create(t);
+//            groups.delete(groups.queryForAll().get(0));
+//            eventDao.delete(eventDao.queryForAll().get(0));
+//            transactionsDao.delete(transactionsDao.queryForAll().get(0));
+
+            Log.i(LOG_TAG, groupsDao.queryForAll().toString());
+            Log.i(LOG_TAG, eventDao.queryForAll().toString());
+            Log.i(LOG_TAG, transactionsDao.queryForAll().toString());
         } catch (SQLException e) {
             Log.e(LOG_TAG, e.getMessage());
         }
@@ -55,6 +83,7 @@ public class MainActivity extends ActionBarActivity {
         if (helper == null) {
             helper = SharmanaDBHelper.getHelper(this);
         }
+//        Group g = new Group();
         return helper;
     }
 }
