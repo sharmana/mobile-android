@@ -1,7 +1,9 @@
 package com.sharmana.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -9,6 +11,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import com.sharmana.R;
+import com.sharmana.Tasks.YandexOAuthTokenTask;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 
 public class LoginActivity extends Activity implements View.OnClickListener {
@@ -65,7 +76,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
     private void handleEnter() {
         Log.i(LOG_TAG, "Button 'Enter' clicked");
-        // TODO:
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://oauth.yandex.ru/authorize?response_type=code&client_id=20880bd1f59c42b48f419e986fbc6b4d"));
+        startActivity(browserIntent);
+//        new YandexOAuthTokenTask().execute();
     }
 
 }
