@@ -54,7 +54,7 @@ public class Group {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("{ Id = ").append(id);
+        sb.append("Type = Group { Id = ").append(id);
         sb.append(", ").append("Name = ").append(name);
         sb.append(", ").append("ExternalId = ").append(externalId).append(" }");
         return sb.toString();

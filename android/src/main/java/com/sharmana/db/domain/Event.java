@@ -79,7 +79,7 @@ public class Event {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("{ Id = ").append(id);
+        sb.append("Type = Event { Id = ").append(id);
         sb.append(", ").append("Name = ").append(name);
         sb.append(", ").append("Group = ").append(group);
         sb.append(", ").append("Currency = ").append(currency);

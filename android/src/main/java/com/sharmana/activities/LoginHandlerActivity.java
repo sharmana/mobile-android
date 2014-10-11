@@ -1,17 +1,39 @@
 package com.sharmana.activities;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.sharmana.R;
+import com.sharmana.Tasks.SharmanaAuthByYaTokenTask;
 
 public class LoginHandlerActivity extends ActionBarActivity {
 
+    private static final String LOG_TAG = "com.sharmana.activities.LoginHandlerActivity";
+
+//    ID: 20880bd1f59c42b48f419e986fbc6b4d
+//    Пароль: adfd834d798b479ca49f6d8feb490dfa
+//    Callback URL: sharmana://token
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_handler);
+
+        Log.i(LOG_TAG, "Iam here");
+
+        Intent intent = getIntent();
+
+//        String code = intent.getData().getQueryParameter("token");
+        Log.i(LOG_TAG, intent.getDataString());
+        String url = intent.getDataString();
+        int start = url.indexOf("access_token=") + "access_token=".length();
+        int stop = url.indexOf("&", start);
+        String accessToken = url.substring(start, stop);
+        Log.i(LOG_TAG, accessToken);
+
+        new SharmanaAuthByYaTokenTask().execute(accessToken);
     }
 
 
