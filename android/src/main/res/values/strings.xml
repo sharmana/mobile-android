@@ -4,5 +4,13 @@
     <string name="app_name">Sharmana</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_group">GroupActivity</string>
+    <string name="title_activity_new_group">NewGroupActivity</string>
+    <string name="title_activity_event">EventActivity</string>
+    <string name="title_activity_new_event">NewEventActivity</string>
+    <string name="title_activity_transaction_event">TransactionEvent</string>
+    <string name="title_activity_transaction">TransactionActivity</string>
+    <string name="title_activity_new_transaction">NewTransaction</string>
 
 </resources>

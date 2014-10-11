@@ -30,6 +30,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
+    }
 }
 
 dependencies {
@@ -39,4 +47,12 @@ dependencies {
     compile 'com.android.support:support-v4:19.1.0'
     compile 'com.j256.ormlite:ormlite-android:4.48'
     compile 'com.j256.ormlite:ormlite-core:4.48'
+    compile 'com.octo.android.robospice:robospice:1.4.14'
+    compile 'org.codehaus.jac' +
+            'kson:jackson-mapper-asl:1.9.13'
+    compile 'com.octo.android.robospice:robospice-google-http-client:1.4.14'
+    compile('com.google.http-client:google-http-client-jackson2:1.19.0') {
+        exclude module: 'xpp3'
+        exclude group: 'stax'
+    }
 }
