@@ -2,16 +2,33 @@ package com.sharmana;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.j256.ormlite.dao.Dao;
+import com.sharmana.db.Group;
+import com.sharmana.db.SharmanaDBHelper;
+
+import java.sql.SQLException;
 
 
 public class MainActivity extends ActionBarActivity {
 
+    private static final String LOG_TAG = "com.sharmana.MainActivity";
+
+    SharmanaDBHelper helper = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+        try {
+            Dao<Group, Integer> groups = getSharmanaHelper().getGroupsDao();
+            groups.queryForAll();
+        } catch (SQLException e) {
+            Log.e(LOG_TAG, e.getMessage());
+        }
     }
 
 
@@ -32,5 +49,12 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private SharmanaDBHelper getSharmanaHelper() {
+        if (helper == null) {
+            helper = SharmanaDBHelper.getHelper(this);
+        }
+        return helper;
     }
 }
