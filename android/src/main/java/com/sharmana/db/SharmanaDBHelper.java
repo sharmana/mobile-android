@@ -23,7 +23,7 @@ public class SharmanaDBHelper extends OrmLiteSqliteOpenHelper {
     private static final String LOG_TAG = "com.sharmana.SharmanaDBHelper";
 
     private static final String DATABASE_NAME = "SharmanaDB";
-    private static final int DATABASE_VERSION = 7;
+    private static final int DATABASE_VERSION = 15;
 
     private static SharmanaDBHelper helper;
     private static AtomicLong usageCounter = new AtomicLong();
@@ -53,12 +53,18 @@ public class SharmanaDBHelper extends OrmLiteSqliteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase database, ConnectionSource connectionSource, int oldVersion, int newVersion) {
+        Log.i(LOG_TAG, "before try onUpgrade from "+oldVersion+" to "+newVersion);
         try {
             Log.i(LOG_TAG, "onUpgrade from "+oldVersion+" to "+newVersion);
 
             TableUtils.dropTable(connectionSource, Group.class, true);
+            Log.i(LOG_TAG, "drop grpup");
+            TableUtils.dropTable(connectionSource, User.class, true);
+            Log.i(LOG_TAG, "drop user");
             TableUtils.dropTable(connectionSource, Event.class, true);
+            Log.i(LOG_TAG, "drop event");
             TableUtils.dropTable(connectionSource, Transaction.class, true);
+            Log.i(LOG_TAG, "drop transaction");
 
             onCreate(database, connectionSource);
         } catch (SQLException e) {

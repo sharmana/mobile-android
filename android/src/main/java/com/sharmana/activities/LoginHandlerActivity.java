@@ -69,8 +69,14 @@ public class LoginHandlerActivity extends Activity implements OnObjectDtoLoadedL
             User user = userDao.getByExternalId(objectDTO.get_id());
             if (user == null) {
                 userDao.insertUser(objectDTO);
+                user = userDao.getByExternalId(objectDTO.get_id());
             }
+            userDao.setActive(user);
             Log.i(LOG_TAG, String.valueOf(userDao.getAllUser()));
+
+            Intent intent = new Intent(this, EventActivity.class);
+            startActivity(intent);
+            finish();
         } catch (SQLException e) {
             e.printStackTrace();
         }
