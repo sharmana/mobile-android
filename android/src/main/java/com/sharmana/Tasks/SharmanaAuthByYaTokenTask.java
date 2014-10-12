@@ -17,7 +17,7 @@ import org.codehaus.jackson.map.ObjectMapper;
  */
 public class SharmanaAuthByYaTokenTask extends AsyncTask<String, Integer, UserDTO> {
 
-    private static final String LOG_TAG = "com.sharmana.Tasks.YandexOAuthTokenTask";
+    private static final String LOG_TAG = "com.sharmana.Tasks.SharmanaAuthByYaTokenTask";
 
     OnObjectDtoLoadedListnerer onObjectDtoLoadedListnerer;
 

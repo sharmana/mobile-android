@@ -9,12 +9,19 @@ import android.view.View;
 import android.widget.*;
 import com.sharmana.EventAdapter;
 import com.sharmana.R;
+import com.sharmana.Tasks.GetAllEventsTask;
+import com.sharmana.Tasks.OnObjectDtoLoadedListnerer;
+import com.sharmana.db.SharmanaDBHelper;
+import com.sharmana.db.dao.UserDao;
+import com.sharmana.db.domain.User;
 import com.sharmana.db.dto.EventDTO;
+import com.sharmana.db.dto.EventsDTO;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventActivity extends Activity implements AdapterView.OnItemClickListener {
+public class EventActivity extends Activity implements AdapterView.OnItemClickListener, OnObjectDtoLoadedListnerer<EventsDTO> {
 
     private static final String LOG_TAG = "com.sharmana.EventActivity";
 
@@ -50,11 +57,18 @@ public class EventActivity extends Activity implements AdapterView.OnItemClickLi
 
     private void startLoading() {
         Log.i(LOG_TAG, "startLoading()");
-        /*
-            LoadingEventsTask task = new LoadingEventTask(this);
-            task.execute();
-          */
-        List<EventDTO> events = new ArrayList<EventDTO>();
+
+        SharmanaDBHelper helper = SharmanaDBHelper.getHelper(this);
+        try {
+            User user = new UserDao(helper).getActiveUser();
+            GetAllEventsTask task = new GetAllEventsTask(this);
+            task.execute(user.getExternalId());
+        } catch (SQLException e) {
+            Log.e(LOG_TAG, "Can't load user or can't connect to db");
+        }
+
+
+        /*List<EventDTO> events = new ArrayList<EventDTO>();
         EventDTO event;
         event = new EventDTO();
         event.setName("New Name");
@@ -108,15 +122,15 @@ public class EventActivity extends Activity implements AdapterView.OnItemClickLi
 
 
 
-        this.onLoadingSuccess(events);
+        this.onLoadingSuccess(events);*/
     }
 
-    public void onLoadingSuccess(List<EventDTO> events) {
+    public void onLoadingSuccess(EventsDTO events) {
         Log.i(LOG_TAG, "onLoadingSuccess()");
 
-        this.events = events;
+        this.events = (List<EventDTO>)events;
 
-        ListAdapter adapter = new EventAdapter(this, R.layout.item_event, events);
+        ListAdapter adapter = new EventAdapter(this, R.layout.item_event, this.events);
         lvEvents.setAdapter(adapter);
         lvEvents.setOnItemClickListener(this);
     }
@@ -150,4 +164,15 @@ public class EventActivity extends Activity implements AdapterView.OnItemClickLi
         ((Button)view.findViewById(R.id.bEvent)).setBackgroundResource(R.drawable.gradient_shape);
     }
 
+    @Override
+    public void objectLoaded(EventsDTO objectDTO) {
+
+        Log.i(LOG_TAG, "objectLoaded "+objectDTO);
+        if (objectDTO != null) {
+            for (EventDTO event : objectDTO) {
+               Log.i(LOG_TAG, "Event_Name: "+event.getName());
+            }
+            this.onLoadingSuccess(objectDTO);
+        }
+    }
 }

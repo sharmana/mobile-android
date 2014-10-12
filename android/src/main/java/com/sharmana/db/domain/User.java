@@ -25,6 +25,17 @@ public class User {
     @DatabaseField(columnName = "externalId", dataType = DataType.STRING)
     private String externalId;
 
+    @DatabaseField(columnName = "isActive", dataType = DataType.BOOLEAN)
+    private boolean isActive;
+
+    public boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
     public int getId() {
         return id;
     }

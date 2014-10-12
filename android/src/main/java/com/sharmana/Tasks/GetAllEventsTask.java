@@ -7,6 +7,7 @@ import com.sharmana.db.dto.EventsDTO;
 import com.sharmana.db.dto.UserDTO;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
@@ -41,12 +42,14 @@ public class GetAllEventsTask extends AsyncTask<String, Integer, EventsDTO> {
         EventsDTO eventDTO = null;
         try {
             String token = params[0];
-            HttpPost httpPost = new HttpPost("http://api.sharmana.ru/events/my");
-            httpPost.setHeader("Authorization", token);
-            HttpResponse response = httpclient.execute(httpPost);
+            HttpGet httpGet = new HttpGet("http://api.sharmana.ru/events/my");
+            httpGet.setHeader("Authorization", token);
+            HttpResponse response = httpclient.execute(httpGet);
             if(response.getStatusLine().getStatusCode() == 200) {
                 ObjectMapper mapper = new ObjectMapper();
-                eventDTO = mapper.readValue(EntityUtils.toString(response.getEntity()), EventsDTO.class);
+                String responseResult = EntityUtils.toString(response.getEntity(), "UTF-8");
+                Log.i(LOG_TAG, "response for events: "+responseResult);
+                eventDTO = mapper.readValue(responseResult, EventsDTO.class);
                 Log.i(LOG_TAG, eventDTO.toString());
 
             }
