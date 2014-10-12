@@ -43,7 +43,10 @@ public class Email {
         this.event = event;
     }
 
+
+    public Email() {}
     public Email(String email) {
         this.email = email;
     }
+
 }
