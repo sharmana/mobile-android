@@ -7,7 +7,8 @@ import org.codehaus.jackson.annotate.JsonProperty;
  */
 public class TransactionDTO {
 
-
+    @JsonProperty("_id")
+    private String id;
     @JsonProperty("who")
     private String who;
     @JsonProperty("count")
@@ -16,6 +17,27 @@ public class TransactionDTO {
     private Long date;
     @JsonProperty("comment")
     private String comment;
+
+    /**
+     *
+     * @return
+     *     The id
+     */
+    @JsonProperty("_id")
+    public String getId
+    () {
+        return id;
+    }
+
+    /**
+     *
+     * @param id
+     *     The who
+     */
+    @JsonProperty("_id")
+    public void setId(String id) {
+        this.id = id;
+    }
 
     /**
      *

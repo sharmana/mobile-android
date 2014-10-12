@@ -5,7 +5,6 @@ import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
-import com.sharmana.db.HelperFactory;
 
 import java.sql.SQLException;
 import java.util.Collection;
@@ -37,6 +36,20 @@ public class Event {
 
     public void removeEmail(Dao<Email, Integer> dao, Email value) throws SQLException {
         emails.remove(value);
+        dao.delete(value);
+    }
+
+    @ForeignCollectionField(eager = true)
+    private Collection<Transaction> transactions;
+
+    public void addTransaction(Dao<Transaction, Integer> dao, Transaction value) throws SQLException {
+        value.setEvent(this);
+        dao.create(value);
+        transactions.add(value);
+    }
+
+    public void removeTransaction(Dao<Transaction, Integer> dao, Transaction value) throws SQLException {
+        transactions.remove(value);
         dao.delete(value);
     }
 

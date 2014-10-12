@@ -41,6 +41,11 @@ public class EventDao {
         });
     }
 
+    public void insert(EventDTO eventDTO) throws Exception {
+        Event event = convert(eventDTO);
+        eventDao.create(event);
+    }
+
     private Event convert(EventDTO eventDTO) throws SQLException {
         Event event = new Event();
         event.setName(eventDTO.getName());

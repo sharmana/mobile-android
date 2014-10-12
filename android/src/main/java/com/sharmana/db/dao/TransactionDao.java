@@ -1,7 +1,43 @@
 package com.sharmana.db.dao;
 
+import android.util.Log;
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.UpdateBuilder;
+import com.sharmana.db.SharmanaDBHelper;
+import com.sharmana.db.domain.Transaction;
+import com.sharmana.db.domain.User;
+import com.sharmana.db.dto.TransactionDTO;
+import com.sharmana.db.dto.UserDTO;
+
+import java.sql.SQLException;
+import java.util.List;
+
 /**
  * Created by strusov on 12.10.2014.
  */
 public class TransactionDao {
+    private static final String LOG_TAG = "com.sharmana.TransactionDao";
+
+    private Dao<User, Integer> usersDao;
+    public TransactionDao(SharmanaDBHelper sharmanaDBHelper) throws SQLException {
+        usersDao = sharmanaDBHelper.getUsersDao();
+    }
+
+    public void insertUser(UserDTO userDTO) throws SQLException {
+        User u = new User();
+        u.setExternalId(userDTO.get_id());
+        u.setName(userDTO.getName());
+        u.setEmail(userDTO.getEmail());
+        u.setYandexId(userDTO.getYandex_id());
+        usersDao.create(u);
+    }
+
+    public Transaction convert(TransactionDTO transactionDTO) {
+        Transaction transaction = new Transaction();
+        transaction.setExternalId(transactionDTO.getId());
+        transaction.setAmount(transactionDTO.getCount());
+        transaction.setFrom(transactionDTO.getWho());
+        transaction.setTo(transactionDTO.get);
+        return transaction;
+    }
 }
