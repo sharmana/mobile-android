@@ -61,7 +61,6 @@ public class GetAllEventsTask extends AsyncTask<String, Integer, EventsDTO> {
 
     @Override
     protected void onPostExecute(EventsDTO result) {
-        //super.onPostExecute(result);
         onObjectDtoLoadedListnerer.objectLoaded(result);
     }
 }

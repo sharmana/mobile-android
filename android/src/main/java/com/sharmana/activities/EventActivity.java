@@ -1,6 +1,7 @@
 package com.sharmana.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -21,7 +22,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventActivity extends Activity implements AdapterView.OnItemClickListener, OnObjectDtoLoadedListnerer<EventsDTO> {
+public class EventActivity extends Activity implements OnObjectDtoLoadedListnerer<EventsDTO>, View.OnClickListener {
 
     private static final String LOG_TAG = "com.sharmana.EventActivity";
 
@@ -47,8 +48,8 @@ public class EventActivity extends Activity implements AdapterView.OnItemClickLi
     private void initControls() {
         lvEvents = (ListView) findViewById(R.id.lvEvents);
         ibAdd = (Button) findViewById(R.id.ibAdd);
-        //ibDelete = (Button) findViewById(R.id.ibDelete);
-        //ibEdit = (Button) findViewById(R.id.ibEdit);
+
+        ibAdd.setOnClickListener(this);
     }
 
     private void initData() {
@@ -132,12 +133,12 @@ public class EventActivity extends Activity implements AdapterView.OnItemClickLi
 
         ListAdapter adapter = new EventAdapter(this, R.layout.item_event, this.events);
         lvEvents.setAdapter(adapter);
-        lvEvents.setOnItemClickListener(this);
     }
 
     public void onLoagingFailed() {
         Log.e(LOG_TAG, "We can't load");
     }
+
 
 
     @Override
@@ -160,11 +161,6 @@ public class EventActivity extends Activity implements AdapterView.OnItemClickLi
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        ((Button)view.findViewById(R.id.bEvent)).setBackgroundResource(R.drawable.gradient_shape);
-    }
-
-    @Override
     public void objectLoaded(EventsDTO objectDTO) {
 
         Log.i(LOG_TAG, "objectLoaded "+objectDTO);
@@ -174,5 +170,19 @@ public class EventActivity extends Activity implements AdapterView.OnItemClickLi
             }
             this.onLoadingSuccess(objectDTO);
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ibAdd:
+                addNewEvent();
+                break;
+        }
+    }
+
+    private void addNewEvent() {
+        Intent intent = new Intent(this, NewEventActivity.class);
+        startActivity(intent);
     }
 }

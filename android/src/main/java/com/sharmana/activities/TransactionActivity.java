@@ -2,16 +2,49 @@ package com.sharmana.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.sharmana.R;
+import com.sharmana.db.SharmanaDBHelper;
+import com.sharmana.db.domain.Transaction;
+import com.sharmana.db.dto.TransactionDTO;
+
+import java.util.List;
 
 public class TransactionActivity extends Activity {
+
+    private static final String LOG_TAG = "com.sharmana.TransactionActivity";
+
+    private String externalId;
+    private List<Transaction> transactions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction);
+
+        init();
+    }
+
+    private void init() {
+       initEvent();
+       initControls();
+    }
+
+    private void initEvent() {
+        String externalId = getIntent().getStringExtra("ExternalEventId");
+        SharmanaDBHelper helper = SharmanaDBHelper.getHelper(this);
+        try {
+            transactions = helper.getTransactionsDao().queryForEq("idExternal", externalId);
+        } catch (Exception e) {
+            Log.e(LOG_TAG, "Can't load transactions");
+            finish();
+        }
+    }
+
+    private void initControls() {
+
     }
 
 
