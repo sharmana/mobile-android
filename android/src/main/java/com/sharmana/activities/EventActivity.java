@@ -1,6 +1,7 @@
 package com.sharmana.activities;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -21,7 +22,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventActivity extends Activity implements AdapterView.OnItemClickListener, OnObjectDtoLoadedListnerer<EventsDTO> {
+public class EventActivity extends Activity implements OnObjectDtoLoadedListnerer<EventsDTO> {
 
     private static final String LOG_TAG = "com.sharmana.EventActivity";
 
@@ -132,7 +133,6 @@ public class EventActivity extends Activity implements AdapterView.OnItemClickLi
 
         ListAdapter adapter = new EventAdapter(this, R.layout.item_event, this.events);
         lvEvents.setAdapter(adapter);
-        lvEvents.setOnItemClickListener(this);
     }
 
     public void onLoagingFailed() {
@@ -157,11 +157,6 @@ public class EventActivity extends Activity implements AdapterView.OnItemClickLi
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        ((Button)view.findViewById(R.id.bEvent)).setBackgroundResource(R.drawable.gradient_shape);
     }
 
     @Override
