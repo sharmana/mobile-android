@@ -53,6 +53,10 @@ public class Event {
         dao.delete(value);
     }
 
+    public Collection<Transaction> getTransactions() {
+        return transactions;
+    }
+
     @DatabaseField(columnName = "currency", dataType = DataType.STRING)
     private String currency;
 

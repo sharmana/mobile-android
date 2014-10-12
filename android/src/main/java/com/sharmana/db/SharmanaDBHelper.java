@@ -20,7 +20,7 @@ public class SharmanaDBHelper extends OrmLiteSqliteOpenHelper {
     private static final String LOG_TAG = "com.sharmana.SharmanaDBHelper";
 
     private static final String DATABASE_NAME = "SharmanaDB";
-    private static final int DATABASE_VERSION = 16;
+    private static final int DATABASE_VERSION = 18;
 
     private static SharmanaDBHelper helper;
     private static AtomicLong usageCounter = new AtomicLong();
@@ -64,6 +64,8 @@ public class SharmanaDBHelper extends OrmLiteSqliteOpenHelper {
             Log.i(LOG_TAG, "drop event");
             TableUtils.dropTable(connectionSource, Transaction.class, true);
             Log.i(LOG_TAG, "drop transaction");
+            TableUtils.dropTable(connectionSource, Email.class, true);
+            Log.i(LOG_TAG, "drop emails");
 
             onCreate(database, connectionSource);
         } catch (SQLException e) {
