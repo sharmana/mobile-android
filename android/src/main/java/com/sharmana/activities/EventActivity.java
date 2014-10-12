@@ -13,6 +13,7 @@ import com.sharmana.R;
 import com.sharmana.Tasks.GetAllEventsTask;
 import com.sharmana.Tasks.OnObjectDtoLoadedListnerer;
 import com.sharmana.db.SharmanaDBHelper;
+import com.sharmana.db.dao.EventDao;
 import com.sharmana.db.dao.UserDao;
 import com.sharmana.db.domain.User;
 import com.sharmana.db.dto.EventDTO;
@@ -130,7 +131,13 @@ public class EventActivity extends Activity implements OnObjectDtoLoadedListnere
         Log.i(LOG_TAG, "onLoadingSuccess()");
 
         this.events = (List<EventDTO>)events;
-
+        EventDao eventDao = null;
+        try {
+            eventDao = new EventDao(SharmanaDBHelper.getHelper(this));
+            eventDao.insert(this.events);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         ListAdapter adapter = new EventAdapter(this, R.layout.item_event, this.events);
         lvEvents.setAdapter(adapter);
     }

@@ -13,7 +13,7 @@ public class Transaction {
     @DatabaseField(generatedId = true)
     private int id;
 
-    @DatabaseField(columnName = "eventId", foreign = true)
+    @DatabaseField(columnName = "eventId", foreign = true, foreignAutoRefresh = true)
     private Event event;
 
     @DatabaseField(columnName = "from", dataType = DataType.STRING)

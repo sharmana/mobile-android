@@ -39,6 +39,20 @@ public class Event {
         dao.delete(value);
     }
 
+    @ForeignCollectionField(eager = true)
+    private Collection<Transaction> transactions;
+
+    public void addTransaction(Dao<Transaction, Integer> dao, Transaction value) throws SQLException {
+        value.setEvent(this);
+        dao.create(value);
+        transactions.add(value);
+    }
+
+    public void removeTransaction(Dao<Transaction, Integer> dao, Transaction value) throws SQLException {
+        transactions.remove(value);
+        dao.delete(value);
+    }
+
     @DatabaseField(columnName = "currency", dataType = DataType.STRING)
     private String currency;
 
