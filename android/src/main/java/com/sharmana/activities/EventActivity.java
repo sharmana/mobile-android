@@ -22,7 +22,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventActivity extends Activity implements OnObjectDtoLoadedListnerer<EventsDTO> {
+public class EventActivity extends Activity implements OnObjectDtoLoadedListnerer<EventsDTO>, View.OnClickListener {
 
     private static final String LOG_TAG = "com.sharmana.EventActivity";
 
@@ -48,8 +48,8 @@ public class EventActivity extends Activity implements OnObjectDtoLoadedListnere
     private void initControls() {
         lvEvents = (ListView) findViewById(R.id.lvEvents);
         ibAdd = (Button) findViewById(R.id.ibAdd);
-        //ibDelete = (Button) findViewById(R.id.ibDelete);
-        //ibEdit = (Button) findViewById(R.id.ibEdit);
+
+        ibAdd.setOnClickListener(this);
     }
 
     private void initData() {
@@ -140,6 +140,7 @@ public class EventActivity extends Activity implements OnObjectDtoLoadedListnere
     }
 
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -169,5 +170,19 @@ public class EventActivity extends Activity implements OnObjectDtoLoadedListnere
             }
             this.onLoadingSuccess(objectDTO);
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ibAdd:
+                addNewEvent();
+                break;
+        }
+    }
+
+    private void addNewEvent() {
+        Intent intent = new Intent(this, NewEventActivity.class);
+        startActivity(intent);
     }
 }
