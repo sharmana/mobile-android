@@ -41,7 +41,7 @@ public class GetAllEventsTask extends AsyncTask<String, Integer, EventsDTO> {
         EventsDTO eventDTO = null;
         try {
             String token = params[0];
-            HttpPost httpPost = new HttpPost("http://api.sharmana.ru/event/my");
+            HttpPost httpPost = new HttpPost("http://api.sharmana.ru/events/my");
             httpPost.setHeader("Authorization", token);
             HttpResponse response = httpclient.execute(httpPost);
             if(response.getStatusLine().getStatusCode() == 200) {
