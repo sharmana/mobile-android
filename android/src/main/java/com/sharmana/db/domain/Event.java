@@ -1,8 +1,15 @@
 package com.sharmana.db.domain;
 
+import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
+import com.sharmana.db.HelperFactory;
+
+import java.sql.SQLException;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by strusov on 11.10.2014.
@@ -18,6 +25,20 @@ public class Event {
 
     @DatabaseField(columnName = "groupId", foreign = true)
     private Group group;
+
+    @ForeignCollectionField(eager = true)
+    private Collection<Email> emails;
+
+    public void addEmail(Dao<Email, Integer> dao, Email value) throws SQLException {
+        value.setEvent(this);
+        dao.create(value);
+        emails.add(value);
+    }
+
+    public void removeEmail(Dao<Email, Integer> dao, Email value) throws SQLException {
+        emails.remove(value);
+        dao.delete(value);
+    }
 
     @DatabaseField(columnName = "currency", dataType = DataType.STRING)
     private String currency;
