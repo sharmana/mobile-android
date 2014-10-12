@@ -73,6 +73,7 @@ public class EventAdapter extends ArrayAdapter<EventDTO> implements View.OnClick
 
             Intent intent = new Intent(getContext(), TransactionActivity.class);
             intent.putExtra("ExternalEventId", event.getId());
+            Log.d(LOG_TAG,"Id before perform: "+event.getId());
             getContext().startActivity(intent);
         }
     }

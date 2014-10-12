@@ -32,7 +32,7 @@ public class Transaction {
     private String externalId;
 
     @DatabaseField(columnName = "date", dataType = DataType.LONG)
-    private Long date;
+    private long date;
 
     @DatabaseField(columnName = "comment", dataType = DataType.STRING)
     private String comment;
@@ -94,10 +94,10 @@ public class Transaction {
         this.externalId = externalId;
     }
 
-    public Long getDate() {
+    public long getDate() {
         return date;
     }
-    public void setDate(Long date) {
+    public void setDate(long date) {
         this.date = date;
     }
 

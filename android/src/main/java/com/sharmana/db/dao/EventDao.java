@@ -53,6 +53,7 @@ public class EventDao {
         if(events != null && events.size() > 0) {
             return (List<Transaction>)events.get(0).getTransactions();
         }
+        return null;
     }
 
     private Event convert(EventDTO eventDTO) throws SQLException {

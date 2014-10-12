@@ -139,7 +139,7 @@ public class EventDTO {
     @JsonProperty("total")
     private Double total;
     @JsonProperty("created")
-    private Long created;
+    private long created;
     @JsonProperty("emails")
     private List<String> emails = new ArrayList<String>();
     @JsonProperty("transactions")
@@ -256,7 +256,7 @@ public class EventDTO {
      *     The created
      */
     @JsonProperty("created")
-    public Long getCreated() {
+    public long getCreated() {
         return created;
     }
 
@@ -266,11 +266,11 @@ public class EventDTO {
      *     The created
      */
     @JsonProperty("created")
-    public void setCreated(Long created) {
+    public void setCreated(long created) {
         this.created = created;
     }
 
-    public EventDTO withCreated(Long created) {
+    public EventDTO withCreated(long created) {
         this.created = created;
         return this;
     }

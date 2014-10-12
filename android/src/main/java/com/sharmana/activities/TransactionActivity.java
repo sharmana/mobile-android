@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 import com.sharmana.R;
+import com.sharmana.TransactionAdapter;
 import com.sharmana.db.SharmanaDBHelper;
+import com.sharmana.db.dao.EventDao;
 import com.sharmana.db.domain.Transaction;
 import com.sharmana.db.dto.TransactionDTO;
 
@@ -18,6 +21,8 @@ public class TransactionActivity extends Activity {
 
     private String externalId;
     private List<Transaction> transactions;
+
+    private ListView lvTransactions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +39,10 @@ public class TransactionActivity extends Activity {
 
     private void initEvent() {
         String externalId = getIntent().getStringExtra("ExternalEventId");
+        Log.i(LOG_TAG, "external id = "+externalId);
         SharmanaDBHelper helper = SharmanaDBHelper.getHelper(this);
         try {
-            transactions = helper.getTransactionsDao().queryForEq("idExternal", externalId);
+            transactions = new EventDao(helper).getTransactionByExternalEventId(externalId);
         } catch (Exception e) {
             Log.e(LOG_TAG, "Can't load transactions");
             finish();
@@ -44,7 +50,12 @@ public class TransactionActivity extends Activity {
     }
 
     private void initControls() {
-
+        lvTransactions = (ListView) findViewById(R.id.lvTransactions);
+        Log.i(LOG_TAG, "Size of transactions:  "+transactions);
+        if (transactions != null && transactions.size() > 0) {
+            TransactionAdapter adapter = new TransactionAdapter(this, R.layout.item_transaction, transactions);
+            lvTransactions.setAdapter(adapter);
+        }
     }
 
 

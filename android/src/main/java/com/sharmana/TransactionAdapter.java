@@ -13,6 +13,8 @@ import com.sharmana.db.domain.Transaction;
 import com.sharmana.db.dto.TransactionDTO;
 import org.w3c.dom.Text;
 
+import java.util.List;
+
 /**
  * Created by MandM on 12.10.2014.
  */
@@ -32,7 +34,7 @@ public class TransactionAdapter extends ArrayAdapter<Transaction> {
     }
 
 
-    public TransactionAdapter(Context context, int resource, Transaction[] transactions, Event event) {
+    public TransactionAdapter(Context context, int resource, List<Transaction> transactions) {
 
         super(context, resource, transactions);
     }
@@ -48,7 +50,7 @@ public class TransactionAdapter extends ArrayAdapter<Transaction> {
 
         if (view == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            view = inflater.inflate(R.layout.item_event, null);
+            view = inflater.inflate(R.layout.item_transaction, null);
         }
 
         Transaction transaction = getItem(position);
@@ -58,8 +60,7 @@ public class TransactionAdapter extends ArrayAdapter<Transaction> {
             TextView tvTransaction = (TextView) view.findViewById(R.id.tvTransaction);
             tvTitle.setTypeface(font);
             tvTransaction.setTypeface(font);
-            //tvTitle.setText(transaction.getComment());
-            tvTitle.setText("Коммент");
+            tvTitle.setText(transaction.getComment());
             tvTransaction.setText(transaction.getTo() + " - " + transaction.getAmount());
         }
 
