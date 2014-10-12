@@ -11,13 +11,23 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import com.j256.ormlite.dao.Dao;
 import com.sharmana.R;
+import com.sharmana.Tasks.AddEventTask;
+import com.sharmana.Tasks.OnObjectDtoLoadedListnerer;
+import com.sharmana.db.SharmanaDBHelper;
+import com.sharmana.db.dao.EventDao;
+import com.sharmana.db.dao.UserDao;
+import com.sharmana.db.domain.Event;
+import com.sharmana.db.domain.User;
 import com.sharmana.db.dto.EventDTO;
+import org.codehaus.jackson.map.ObjectMapper;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewEventActivity extends Activity implements View.OnClickListener {
+public class NewEventActivity extends Activity implements View.OnClickListener, OnObjectDtoLoadedListnerer {
 
     private static final String LOG_TAG = "NewEventActivity";
 
@@ -96,9 +106,31 @@ public class NewEventActivity extends Activity implements View.OnClickListener {
             }
         }
         event.setEmails(emails);
+        SharmanaDBHelper helper = SharmanaDBHelper.getHelper(this);
+       try {
+            //Dao<Event, Integer> eventDao = SharmanaDBHelper.getHelper(this).getEventsDao();
+           EventDao eventDao = new EventDao(helper);
+           eventDao.insert(event);
+       } catch (SQLException e) {
 
-        
-        finish();
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+
+        AddEventTask task = new AddEventTask(this);
+        try {
+            User user = new UserDao(helper).getActiveUser();
+            ObjectMapper mapper = new ObjectMapper();
+            String jsonEvent = mapper.writeValueAsString(event);
+            task.execute(
+                user.getExternalId(),
+                jsonEvent
+            );
+        }catch (Exception e) {
+
+        }
+
+
     }
 
     private void close() {
@@ -116,8 +148,14 @@ public class NewEventActivity extends Activity implements View.OnClickListener {
                 ViewGroup.LayoutParams.WRAP_CONTENT
         ));
         et.setBackgroundResource(R.drawable.edittext_selector);
+        etEmails.add(et);
         llEmails.addView(et);
     }
 
 
+    @Override
+    public void objectLoaded(Object objectDTO) {
+        Log.i(LOG_TAG, "Object Id = "+objectDTO);
+        finish();
+    }
 }

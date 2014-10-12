@@ -43,9 +43,10 @@ public class AddEventTask extends AsyncTask<String, Integer, EventDTO> {
             String eventString = params[1];
             HttpPut httpPut = new HttpPut("http://api.sharmana.ru/event/add");
             httpPut.setHeader("Authorization", token);
+            httpPut.setHeader("Content-type", "application/json");
             httpPut.setEntity(new StringEntity(eventString));
             HttpResponse response = httpclient.execute(httpPut);
-            if(response.getStatusLine().getStatusCode() == 200) {
+            if(response.getStatusLine().getStatusCode() == 201) {
                 ObjectMapper mapper = new ObjectMapper();
                 eventDTO = mapper.readValue(EntityUtils.toString(response.getEntity()), EventDTO.class);
             }
