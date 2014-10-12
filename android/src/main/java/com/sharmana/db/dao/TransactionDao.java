@@ -37,7 +37,8 @@ public class TransactionDao {
         transaction.setExternalId(transactionDTO.getId());
         transaction.setAmount(transactionDTO.getCount());
         transaction.setFrom(transactionDTO.getWho());
-        transaction.setTo(transactionDTO.get);
+        transaction.setDate(transactionDTO.getDate());
+        transaction.setComment(transactionDTO.getComment());
         return transaction;
     }
 }

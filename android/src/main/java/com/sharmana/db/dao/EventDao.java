@@ -4,7 +4,9 @@ import com.j256.ormlite.dao.Dao;
 import com.sharmana.db.SharmanaDBHelper;
 import com.sharmana.db.domain.Email;
 import com.sharmana.db.domain.Event;
+import com.sharmana.db.domain.Transaction;
 import com.sharmana.db.dto.EventDTO;
+import com.sharmana.db.dto.TransactionDTO;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -46,16 +48,30 @@ public class EventDao {
         eventDao.create(event);
     }
 
+    public List<Transaction> getTransactionByExternalEventId(String externalEventId) throws SQLException {
+        List<Event> events = eventDao.queryForEq("externalId", externalEventId);
+        if(events != null && events.size() > 0) {
+            return (List<Transaction>)events.get(0).getTransactions();
+        }
+    }
+
     private Event convert(EventDTO eventDTO) throws SQLException {
         Event event = new Event();
         event.setName(eventDTO.getName());
         event.setExternalId(eventDTO.getId());
         event.setCurrency(eventDTO.getCurrency());
         Dao<Email, Integer> emailDao = sharmanaDBHelper.getEmailDao();
+        Dao<Transaction, Integer> transactionsDao = sharmanaDBHelper.getTransactionsDao();
+        TransactionDao myTransactionsDao = new TransactionDao(sharmanaDBHelper);
         for(String email : eventDTO.getEmails()) {
             event.addEmail(emailDao, new Email(email));
+        }
+        for (TransactionDTO transactionDTO : eventDTO.getTransactions()) {
+            event.addTransaction(transactionsDao, myTransactionsDao.convert(transactionDTO));
         }
 //        eventDao.create(event);
         return event;
     }
+
+
 }

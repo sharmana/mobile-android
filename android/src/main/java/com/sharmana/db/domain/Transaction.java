@@ -31,8 +31,19 @@ public class Transaction {
     @DatabaseField(columnName = "externalId", dataType = DataType.STRING)
     private String externalId;
 
-    @DatabaseField(columnName = "date", dataType = DataType.DATE_TIME)
-    private Date date;
+    @DatabaseField(columnName = "date", dataType = DataType.LONG)
+    private Long date;
+
+    @DatabaseField(columnName = "comment", dataType = DataType.STRING)
+    private String comment;
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 
     public int getId() {
         return id;
@@ -83,10 +94,10 @@ public class Transaction {
         this.externalId = externalId;
     }
 
-    public Date getDate() {
+    public Long getDate() {
         return date;
     }
-    public void setDate(Date date) {
+    public void setDate(Long date) {
         this.date = date;
     }
 
